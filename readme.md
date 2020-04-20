@@ -1,8 +1,10 @@
 # Tic Tac Toe Backend
 
-You can find the tutorial on hashnode, [here](https://hashnode.com/post/building-a-nodejs-api-with-typescript-and-graphql-cjrrojjx200uqrxs1ngtitx9p)
+Tic Tac Toe Game on GraphQL, Typescript and AI Minimax Algorithm
 
-### Getting started
+### Getting started 
+
+- Install modules `npm install`
 
 - Run in development mode with hot reloading `npm run dev`
 
