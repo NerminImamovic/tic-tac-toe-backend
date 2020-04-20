@@ -11,3 +11,7 @@ Tic Tac Toe Game on GraphQL, Typescript and AI Minimax Algorithm
 - Build `npm run build`
 
 - Generate types and schemas `npm run generate-typedefs`. do this after changes to the api to keep the types in sync.
+
+### Note
+
+Subscription Url for Altair GraphQL client: ws://localhost:4000/graphql
