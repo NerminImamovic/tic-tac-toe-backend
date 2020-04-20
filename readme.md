@@ -14,4 +14,4 @@ Tic Tac Toe Game on GraphQL, Typescript and AI Minimax Algorithm
 
 ### Note
 
-Subscription Url for Altair GraphQL client: `ws://localhost:4000/graphql/`
+Subscription Url for Altair GraphQL client: `ws://localhost:4000/graphql`
