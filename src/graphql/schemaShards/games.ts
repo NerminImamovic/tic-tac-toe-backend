@@ -74,17 +74,6 @@ const typeDefs = gql`
         emptyFields: [Int]
         timestamp: String
     }
-
-    type GameResult {
-        id: ID
-        player1Id: ID
-        player2Id: ID
-        status: GameStatus
-        player1Fields: [Int]
-        player2Fields: [Int]
-        emptyFields: [Int]
-    }
-
 `;
 
 export default {

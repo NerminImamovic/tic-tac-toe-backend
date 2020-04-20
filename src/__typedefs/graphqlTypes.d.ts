@@ -181,16 +181,6 @@ declare global {
       liveResult?: Game;
     }
     
-    export interface GameResult {
-      id?: string;
-      player1Id?: string;
-      player2Id?: string;
-      status?: GameStatus;
-      player1Fields?: Array<number | null>;
-      player2Fields?: Array<number | null>;
-      emptyFields?: Array<number | null>;
-    }
-    
     /*********************************
      *                               *
      *         TYPE RESOLVERS        *
@@ -209,7 +199,6 @@ declare global {
       User?: UserTypeResolver;
       Mutation?: MutationTypeResolver;
       Subscription?: SubscriptionTypeResolver;
-      GameResult?: GameResultTypeResolver;
     }
     export interface QueryTypeResolver<TParent = any> {
       _empty?: QueryTo_emptyResolver<TParent>;
@@ -468,44 +457,6 @@ declare global {
     export interface SubscriptionToLiveResultResolver<TParent = any, TResult = any> {
       resolve?: (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo) => TResult;
       subscribe: (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo) => AsyncIterator<TResult>;
-    }
-    
-    export interface GameResultTypeResolver<TParent = any> {
-      id?: GameResultToIdResolver<TParent>;
-      player1Id?: GameResultToPlayer1IdResolver<TParent>;
-      player2Id?: GameResultToPlayer2IdResolver<TParent>;
-      status?: GameResultToStatusResolver<TParent>;
-      player1Fields?: GameResultToPlayer1FieldsResolver<TParent>;
-      player2Fields?: GameResultToPlayer2FieldsResolver<TParent>;
-      emptyFields?: GameResultToEmptyFieldsResolver<TParent>;
-    }
-    
-    export interface GameResultToIdResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-    }
-    
-    export interface GameResultToPlayer1IdResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-    }
-    
-    export interface GameResultToPlayer2IdResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-    }
-    
-    export interface GameResultToStatusResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-    }
-    
-    export interface GameResultToPlayer1FieldsResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-    }
-    
-    export interface GameResultToPlayer2FieldsResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
-    }
-    
-    export interface GameResultToEmptyFieldsResolver<TParent = any, TResult = any> {
-      (parent: TParent, args: {}, context: any, info: GraphQLResolveInfo): TResult;
     }
     
   }

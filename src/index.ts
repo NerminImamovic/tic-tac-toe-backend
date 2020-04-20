@@ -10,7 +10,7 @@ const schema = makeExecutableSchema(rawSchema);
 
 // configure the server here
 const serverConfig: Config & { cors?: CorsOptions | boolean } = {
-  cors: true, 
+  cors: true,
   schema,
   context: handleGraphQLContext,
   subscriptions: {
