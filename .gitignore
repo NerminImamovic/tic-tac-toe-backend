@@ -29,6 +29,7 @@ build/Release
 
 # Release directory
 release
+dist
 
 # Docs directories
 docs

@@ -286,7 +286,7 @@ exports.getGameById = getGameById;
 // create a new game
 function createGame(inputCreateGame) {
     return __awaiter(this, void 0, void 0, function* () {
-        const game = Object.assign(Object.assign({}, inputCreateGame), { id: uuid_1.v4(), timestamp: new Date().toUTCString(), status: "NOTSTARTED" /* NOTSTARTED */ });
+        const game = Object.assign(Object.assign({}, inputCreateGame), { id: uuid_1.v4(), timestamp: new Date().toUTCString(), status: "NOTSTARTED" /* NOTSTARTED */, type: inputCreateGame.gameType });
         db.get('games')
             .push(game)
             .write();
@@ -318,14 +318,13 @@ function makeMove(inputMakeMove) {
         const gameId = _.get(inputMakeMove, 'gameId');
         const playerId = _.get(inputMakeMove, 'playerId');
         const field = _.get(inputMakeMove, 'field');
-        const move = Object.assign(Object.assign({}, inputMakeMove), { timestamp: new Date().toUTCString() });
+        const move = Object.assign(Object.assign({ id: uuid_1.v4() }, inputMakeMove), { timestamp: new Date().toUTCString() });
         db.get('moves')
             .push(move)
             .write();
         const game = db.get('games')
             .find({ id: gameId })
             .value();
-        console.log('PlayerId ' + playerId);
         const emptyFields = _.get(game, 'emptyFields');
         if (_.get(game, 'player1Id') === playerId) {
             const playerFields = _.concat(_.get(game, 'player1Fields') || [], field);
@@ -530,7 +529,7 @@ exports.default = {
             // create a game
             createGame: (root, { input }, context) => __awaiter(void 0, void 0, void 0, function* () {
                 let game = yield ticTAcToeGameService.createGame(input);
-                if (game.type === "SINGLEPLAYER" /* SINGLEPLAYER */) {
+                if (input.gameType === "SINGLEPLAYER" /* SINGLEPLAYER */) {
                     const user = yield userService.createAIUser();
                     game = yield ticTAcToeGameService.joinGame({
                         gameId: game.id,
@@ -614,7 +613,7 @@ const ticTacToeGameService = new services_1.TicTacToeGameService();
 const typeDefs = apollo_server_1.gql `
     extend type Mutation {
         " create a new post "
-        makeMove(input: InputMakeMove!): Move
+        makeMove(input: InputMakeMove!): [Move]
     }
 
     " input to create a move "
@@ -640,6 +639,7 @@ exports.default = {
             makeMove: (root, { input }, context) => __awaiter(void 0, void 0, void 0, function* () {
                 // get the user from the context
                 yield auth_1.authenticateContext(context);
+                let moves = [];
                 // publish the post to the subscribers
                 let game = yield ticTacToeGameService.getGameById(input.gameId);
                 if (game.status !== "INPLAY" /* INPLAY */ || !_.includes(game.emptyFields, input.field)) {
@@ -653,18 +653,21 @@ exports.default = {
                 subscriptionManager_1.pubsub.publish('liveResult', {
                     liveResult: game,
                 });
-                if (game.status !== "INPLAY" /* INPLAY */ && game.type !== "SINGLEPLAYER" /* SINGLEPLAYER */) {
+                moves = _.concat(moves, move);
+                game = yield ticTacToeGameService.getGameById(input.gameId);
+                if (_.get(game, 'status') === "INPLAY" /* INPLAY */ && _.get(game, 'type') === "SINGLEPLAYER" /* SINGLEPLAYER */) {
                     const computerInput = {
                         playerId: game.player2Id,
                         gameId: input.gameId,
                     };
-                    yield ticTacToeGameService.makeAIMove(computerInput);
+                    const aiMove = yield ticTacToeGameService.makeAIMove(computerInput);
+                    moves = _.concat(moves, aiMove);
                     game = yield ticTacToeGameService.getGameById(input.gameId);
                     subscriptionManager_1.pubsub.publish('liveResult', {
                         liveResult: game,
                     });
                 }
-                return move;
+                return moves;
             }),
         },
     },
@@ -812,10 +815,10 @@ exports.mergeRawSchemas = (...schemas) => {
 
 /***/ }),
 
-/***/ "./src/helper/minmax.ts":
-/*!******************************!*\
-  !*** ./src/helper/minmax.ts ***!
-  \******************************/
+/***/ "./src/helper/minimax.ts":
+/*!*******************************!*\
+  !*** ./src/helper/minimax.ts ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -968,7 +971,7 @@ server.listen(port).then(({ url }) => {
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(/*! lodash */ "lodash");
-const minmax_1 = __webpack_require__(/*! ../helper/minmax */ "./src/helper/minmax.ts");
+const minimax_1 = __webpack_require__(/*! ../helper/minimax */ "./src/helper/minimax.ts");
 class TicTacToeGame {
     checkWinner(playerFields) {
         // playerFields
@@ -987,7 +990,7 @@ class TicTacToeGame {
             _.isEmpty(_.get(game, 'emptyFields'));
     }
     AIMove(game) {
-        const move = minmax_1.bestSpot(game.player1Fields, game.player2Fields);
+        const move = minimax_1.bestSpot(game.player1Fields, game.player2Fields);
         return move;
     }
 }
@@ -1081,8 +1084,6 @@ class TicTacToeGameService {
     getMovesForGames(gameId) {
         return __awaiter(this, void 0, void 0, function* () {
             const moves = yield db_1.getMovesForGame(gameId);
-            console.log('GameId ' + JSON.stringify(gameId));
-            console.log('Moves ' + JSON.stringify(moves));
             return moves;
         });
     }

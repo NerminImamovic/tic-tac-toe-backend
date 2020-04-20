@@ -128,6 +128,7 @@ export async function createGame(
     id: createUUID(),
     timestamp: new Date().toUTCString(),
     status: GQL.GameStatus.NOTSTARTED,
+    type: inputCreateGame.gameType,
   };
 
   db.get('games')
@@ -170,6 +171,7 @@ export async function makeMove(
   const field: number = _.get(inputMakeMove, 'field');
 
   const move: GQL.Move = {
+    id: createUUID(),
     ...inputMakeMove,
     timestamp: new Date().toUTCString(),
   };
@@ -181,8 +183,6 @@ export async function makeMove(
   const game: Partial<GQL.Game> = db.get('games')
     .find({ id: gameId })
     .value();
-
-  console.log('PlayerId ' + playerId);
 
   const emptyFields: number[] = _.get(game, 'emptyFields');
 

@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 
 import { IGame } from './interfaces/IGame';
 
-import { bestSpot } from '../helper/minmax';
+import { bestSpot } from '../helper/minimax';
 
 class TicTacToeGame implements IGame {
 

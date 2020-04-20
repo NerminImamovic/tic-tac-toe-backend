@@ -100,7 +100,7 @@ export default {
       createGame:  async (root, { input } : GQL.MutationToCreateGameArgs, context) => {
         let game: Partial<GQL.Game> = await ticTAcToeGameService.createGame(input);
 
-        if (game.type === GQL.GameType.SINGLEPLAYER) {
+        if (input.gameType === GQL.GameType.SINGLEPLAYER) {
 
           const user: Partial<GQL.PublicUser> = await userService.createAIUser();
 

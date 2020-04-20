@@ -10,7 +10,7 @@ const ticTacToeGameService: IGameService = new TicTacToeGameService();
 const typeDefs = gql`
     extend type Mutation {
         " create a new post "
-        makeMove(input: InputMakeMove!): Move
+        makeMove(input: InputMakeMove!): [Move]
     }
 
     " input to create a move "
@@ -38,6 +38,8 @@ export default {
         // get the user from the context
         await authenticateContext(context);
 
+        let moves: Partial<GQL.Move>[] = [];
+
         // publish the post to the subscribers
         let game: Partial<GQL.Game> = await ticTacToeGameService.getGameById(input.gameId);
 
@@ -56,14 +58,20 @@ export default {
           liveResult: game,
         });
 
-        if (game.status !== GQL.GameStatus.INPLAY && game.type !== GQL.GameType.SINGLEPLAYER) {
+        moves = _.concat(moves, move);
+
+        game = await ticTacToeGameService.getGameById(input.gameId);
+
+        if (_.get(game, 'status') === GQL.GameStatus.INPLAY && _.get(game, 'type') === GQL.GameType.SINGLEPLAYER) {
 
           const computerInput: GQL.InputMakeMove = {
             playerId: game.player2Id,
             gameId: input.gameId,
           };
 
-          await ticTacToeGameService.makeAIMove(computerInput);
+          const aiMove: Partial<GQL.Move> = await ticTacToeGameService.makeAIMove(computerInput);
+
+          moves = _.concat(moves, aiMove);
 
           game = await ticTacToeGameService.getGameById(input.gameId);
 
@@ -73,7 +81,7 @@ export default {
 
         }
 
-        return move;
+        return moves;
       },
     },
   },

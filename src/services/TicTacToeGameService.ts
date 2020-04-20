@@ -46,11 +46,6 @@ class TicTacToeGameService implements IGameService {
   public async getMovesForGames(gameId: string): Promise<Partial<GQL.Move>[]> {
 
     const moves = await getMovesForGame(gameId);
-
-    console.log('GameId ' + JSON.stringify(gameId));
-
-    console.log('Moves ' + JSON.stringify(moves));
-
     return moves;
   }
 

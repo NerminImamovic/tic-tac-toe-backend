@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import { forEachField } from 'graphql-tools';
 
 type Move = {
   score?: any,

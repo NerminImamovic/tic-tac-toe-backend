@@ -135,7 +135,7 @@ declare global {
       /**
        *  create a new post 
        */
-      makeMove?: Move;
+      makeMove?: Array<Move | null>;
     }
     
     /**

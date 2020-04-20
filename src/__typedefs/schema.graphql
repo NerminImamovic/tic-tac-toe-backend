@@ -1,5 +1,5 @@
 # source: http://localhost:4000/graphql
-# timestamp: Sun Apr 19 2020 20:35:34 GMT+0200 (Central European Summer Time)
+# timestamp: Mon Apr 20 2020 18:59:23 GMT+0200 (Central European Summer Time)
 
 type Game {
   id: ID
@@ -96,7 +96,7 @@ type Mutation {
   registerUser(input: InputRegisterUser!): User
 
   """ create a new post """
-  makeMove(input: InputMakeMove!): Move
+  makeMove(input: InputMakeMove!): [Move]
 }
 
 """ a type defining a user's public data """
