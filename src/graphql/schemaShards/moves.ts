@@ -3,9 +3,10 @@ import { gql } from 'apollo-server';
 import { pubsub } from 'src/graphql/subscriptionManager';
 import { authenticateContext } from 'src/auth';
 
-import { IGameService, TicTacToeGameService } from '../../services';
+import { IGameService, TicTacToeGameService, IUserService, UserService } from '../../services';
 
 const ticTacToeGameService: IGameService = new TicTacToeGameService();
+const userService: IUserService = new UserService();
 
 const typeDefs = gql`
     extend type Mutation {
@@ -83,6 +84,9 @@ export default {
 
         return moves;
       },
+    },
+    Move: {
+      Player: async (move: Partial<GQL.Move>) => await userService.getPublicUser(move.playerId),
     },
   },
   typeDefs: [typeDefs],

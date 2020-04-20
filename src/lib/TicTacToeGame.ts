@@ -35,13 +35,6 @@ class TicTacToeGame implements IGame {
     return winner;
   }
 
-  public checkTie(game: GQL.Game): boolean {
-
-    return !this.checkWinner(_.get(game, 'player1Fields')) &&
-            !this.checkWinner(_.get(game, 'player2Fields')) &&
-            _.isEmpty(_.get(game, 'emptyFields'));
-  }
-
   public AIMove(game: GQL.Game): number {
 
     const move: number = bestSpot(game.player1Fields, game.player2Fields);

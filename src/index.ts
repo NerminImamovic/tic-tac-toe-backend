@@ -1,4 +1,4 @@
-import { ApolloServer, Config } from 'apollo-server';
+import { ApolloServer, Config, CorsOptions } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
 import { handleGraphQLContext, handleGraphQLSubscriptionContext } from 'src/auth/index';
 import { rawSchema } from './graphql';
@@ -9,7 +9,8 @@ const port = process.env.PORT || 4000;
 const schema = makeExecutableSchema(rawSchema);
 
 // configure the server here
-const serverConfig: Config = {
+const serverConfig: Config & { cors?: CorsOptions | boolean } = {
+  cors: true, 
   schema,
   context: handleGraphQLContext,
   subscriptions: {

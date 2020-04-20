@@ -180,17 +180,17 @@ export async function makeMove(
         .push(move)
         .write();
 
-  const game: Partial<GQL.Game> = db.get('games')
+  let game: Partial<GQL.Game> = db.get('games')
     .find({ id: gameId })
     .value();
 
   const emptyFields: number[] = _.get(game, 'emptyFields');
+  let winner: boolean;
 
   if (_.get(game, 'player1Id') === playerId) {
     const playerFields: number[] = _.concat(_.get(game, 'player1Fields') || [], field);
 
-    const winner = ticTacToeGame.checkWinner(playerFields);
-
+    winner = ticTacToeGame.checkWinner(playerFields);
     let gameAttributes: any;
 
     if (winner) {
@@ -205,7 +205,7 @@ export async function makeMove(
       };
     }
 
-    db.get('games')
+    game = db.get('games')
     .find({ id: gameId })
     .assign(
       {
@@ -219,7 +219,7 @@ export async function makeMove(
   if (_.get(game, 'player2Id') === playerId) {
     const playerFields: number[] = _.concat(_.get(game, 'player2Fields') || [], field);
 
-    const winner = ticTacToeGame.checkWinner(playerFields);
+    winner = ticTacToeGame.checkWinner(playerFields);
 
     let gameAttributes: any;
 
@@ -235,15 +235,28 @@ export async function makeMove(
       };
     }
 
-    db.get('games')
-    .find({ id: gameId })
-    .assign(
-      {
-        player2Fields: _.uniq(playerFields),
-        emptyFields: _.difference(emptyFields, [field]),
-        ...gameAttributes,
-      },
-    ).write();
+    game = db.get('games')
+      .find({ id: gameId })
+      .assign(
+        {
+          player2Fields: _.uniq(playerFields),
+          emptyFields: _.difference(emptyFields, [field]),
+          ...gameAttributes,
+        },
+      ).write();
+  }
+
+  const isEmpty: boolean = _.isEmpty(_.get(game, 'emptyFields'));
+
+  if (!winner && isEmpty) {
+    game = db.get('games')
+      .find({ id: gameId })
+      .assign(
+        {
+          status: GQL.GameStatus.FINISHED_TIE,
+          nextTurnPlayerId: null,
+        },
+      ).write();
   }
 
   return move;
