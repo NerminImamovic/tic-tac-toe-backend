@@ -15,3 +15,11 @@ Tic Tac Toe Game on GraphQL, Typescript and AI Minimax Algorithm
 ### Note
 
 Subscription Url for Altair GraphQL client: `ws://localhost:4000/graphql`
+
+We added some basic authentication to it (In heade we send `token: zadsds`. We used lowdb to create a database out of a JSON file.
+
+We used a different technologies such as: 
+
+`apollo` - Provides us with a server implementation for GraphQL, creates a playground where we can play with our queries and gives us different tools.
+`graphql-schema-typescript & graphql cli` - These tools will allow us to convert our GraphQL API into TypeScript.
+`graphql-tag` - Allows us to embed chunks of GraphQL code inside our TypeScript files.
