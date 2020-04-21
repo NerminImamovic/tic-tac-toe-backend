@@ -16,7 +16,7 @@ Tic Tac Toe Game on GraphQL, Typescript and AI Minimax Algorithm
 
 Subscription Url for Altair GraphQL client: `ws://localhost:4000/graphql`
 
-We added some basic authentication to it (In heade we send `token: zadsds`. We used lowdb to create a database out of a JSON file.
+We added some basic authentication to it (In heade we send `token: tokenstring`. We used lowdb to create a database out of a JSON file.
 
 We used a different technologies such as: 
 
