@@ -36,7 +36,7 @@ export default {
     Mutation: {
       // create a post
       makeMove:  async (root, { input }: GQL.MutationToMakeMoveArgs, context) => {
-        // get the user from the context
+
         await authenticateContext(context);
 
         let moves: Partial<GQL.Move>[] = [];

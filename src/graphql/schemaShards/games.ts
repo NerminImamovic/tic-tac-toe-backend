@@ -87,6 +87,9 @@ export default {
     Mutation: {
       // create a game
       createGame:  async (root, { input } : GQL.MutationToCreateGameArgs, context) => {
+
+        await authenticateContext(context);
+
         let game: Partial<GQL.Game> = await ticTAcToeGameService.createGame(input);
 
         if (input.gameType === GQL.GameType.SINGLEPLAYER) {
@@ -104,6 +107,9 @@ export default {
       },
       // join game
       joinGame: async (root, { input } : GQL.MutationToJoinGameArgs, context) => {
+
+        await authenticateContext(context);
+
         const game: Partial<GQL.Game> = await ticTAcToeGameService.joinGame(input);
 
         return game;

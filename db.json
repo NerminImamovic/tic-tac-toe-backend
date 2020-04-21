@@ -95,6 +95,11 @@
       "id": "e3d8abda-3ff0-4521-90f9-e417d4867444",
       "name": "COMPUTER",
       "type": "COMPUTER"
+    },
+    {
+      "id": "ffe3b58b-7a45-4b1a-bea9-674bb564d695",
+      "name": "COMPUTER",
+      "type": "COMPUTER"
     }
   ],
   "games": [
@@ -730,6 +735,31 @@
         0,
         1,
         8
+      ]
+    },
+    {
+      "gameType": "SINGLEPLAYER",
+      "player1Id": "ccf4107f-8c8c-40a7-8719-8df3c6294706",
+      "id": "e73a9f9f-e01c-4e43-8637-faaeeb509406",
+      "timestamp": "Mon, 20 Apr 2020 20:31:18 GMT",
+      "status": "INPLAY",
+      "type": "SINGLEPLAYER",
+      "nextTurnPlayerId": "ccf4107f-8c8c-40a7-8719-8df3c6294706",
+      "player2Id": "ffe3b58b-7a45-4b1a-bea9-674bb564d695",
+      "emptyFields": [
+        0,
+        1,
+        2,
+        3,
+        5,
+        7,
+        8
+      ],
+      "player1Fields": [
+        6
+      ],
+      "player2Fields": [
+        4
       ]
     }
   ],
@@ -1615,6 +1645,20 @@
       "playerId": "5de56a6f-7643-4750-abf4-3e0a5ee72c38",
       "field": 8,
       "timestamp": "Mon, 20 Apr 2020 19:21:12 GMT"
+    },
+    {
+      "id": "e1613f7b-5790-456d-bf94-f2246554d84e",
+      "gameId": "e73a9f9f-e01c-4e43-8637-faaeeb509406",
+      "playerId": "ccf4107f-8c8c-40a7-8719-8df3c6294706",
+      "field": 6,
+      "timestamp": "Mon, 20 Apr 2020 20:32:42 GMT"
+    },
+    {
+      "id": "e31088a1-305e-4aa9-8e79-1e1b60422d7c",
+      "playerId": "ffe3b58b-7a45-4b1a-bea9-674bb564d695",
+      "gameId": "e73a9f9f-e01c-4e43-8637-faaeeb509406",
+      "field": 4,
+      "timestamp": "Mon, 20 Apr 2020 20:32:42 GMT"
     }
   ]
 }
