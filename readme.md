@@ -21,5 +21,7 @@ We added some basic authentication to it (In heade we send `token: zadsds`. We u
 We used a different technologies such as: 
 
 `apollo` - Provides us with a server implementation for GraphQL, creates a playground where we can play with our queries and gives us different tools.
+
 `graphql-schema-typescript & graphql cli` - These tools will allow us to convert our GraphQL API into TypeScript.
+
 `graphql-tag` - Allows us to embed chunks of GraphQL code inside our TypeScript files.
